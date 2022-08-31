@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { Equipamento } from './models/equipamento.model';
 import { EquipamentoService } from './services/equipamento.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-equipamento',
@@ -16,7 +17,8 @@ export class EquipamentoComponent implements OnInit {
   constructor(
     private equipamentoService: EquipamentoService,
     private modalService: NgbModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastrService: ToastrService
     ) { }
 
   ngOnInit(): void {
@@ -68,14 +70,22 @@ export class EquipamentoComponent implements OnInit {
       else
         await this.equipamentoService.editar(this.form.value);
 
-      console.log(`O equipamento foi salvo com sucesso`);
+      this.toastrService.success("O equipamento foi salvo com sucesso.", "Cadastro de Equipamentos");
 
-    } catch (_error) {
+    } catch (error) {
+      if (error != "fechar" && error != "0" && error != "1")
+        this.toastrService.error("Houve um erro ao salvar o equipamento. Tente novamente.", "Cadastro de Equipamentos")
     }
 
   }
 
   public excluir(equipamento: Equipamento) {
-    this.equipamentoService.excluir(equipamento);
+    try {
+      this.equipamentoService.excluir(equipamento);
+
+      this.toastrService.success("O equipamento foi excluído com sucesso.", "Cadastro de Equipamentos");
+    } catch (error){
+      this.toastrService.error("Houve um erro ao salvar o equipamento. Tente novamente.", "Cadastro de Equipamentos")
+    }
   }
 }
