@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EquipamentoComponent } from './equipamento.component';
 import { NgxMaskModule } from 'ngx-mask';
-
+import { EquipamentoService } from './services/equipamento.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import { NgxMaskModule } from 'ngx-mask';
     ReactiveFormsModule,
     EquipamentoRoutingModule,
     NgxMaskModule.forChild()
-  ]
+  ],
+  providers: [EquipamentoService]
 })
 export class EquipamentoModule { }

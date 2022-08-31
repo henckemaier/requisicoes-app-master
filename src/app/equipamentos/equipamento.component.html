@@ -37,7 +37,7 @@
               <td>{{ equipamento.id }}</td>
               <td>{{ equipamento.numeroSerie }}</td>
               <td>{{ equipamento.nome }}</td>
-              <td>R${{ equipamento.preco }}</td>
+              <td>{{ equipamento.preco | currency }}</td>
               <td>{{ equipamento.data | date: "dd/MM/yyyy"}}</td>
               <td class="d-grid d-md-block">
                 <button
@@ -94,7 +94,7 @@
         <input formControlName="preco"
         class="form-control"
         type="number"
-        placeholder="0000.00"
+        placeholder="0,00"
         aria-describedby="basic-addon2">
       </div>
     </div>
