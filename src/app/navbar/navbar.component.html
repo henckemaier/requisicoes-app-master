@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg bg-light shadow">
+  <div class="container">
+    <a class="navbar-brand fw-semibold" routerLink="/login">RequisiçõesApp</a>
+    <button (click)="estaColapsada = !estaColapsada" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [ngbCollapse]="!estaColapsada">
+
+      <!-- pipes do angular -->
+      <div class="links fw-semibold w-100 text-center" *ngIf="(usuarioLogado | async)">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active text-primary" aria-current="page" routerLink="/departamentos">Departamentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-primary" aria-current="page" routerLink="/equipamentos">Equipamentos</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="d-sm-block ms-auto">
+        <a role="button" class="btn btn-primary px-5" (click)="sair()">Sair</a>
+      </div>
+
+    </div>
+  </div>
+</nav>
