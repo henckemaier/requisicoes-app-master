@@ -15,8 +15,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { PainelComponent } from './painel/painel.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { DepartamentoModule } from './departamentos/departamento.module';
-import { EquipamentoModule } from './equipamentos/equipamento.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ToastrModule } from 'ngx-toastr'
@@ -48,9 +46,6 @@ registerLocaleData(ptBr);
     ToastrModule.forRoot({
       positionClass: "toast-bottom-right"
     }),
-
-    DepartamentoModule,
-    EquipamentoModule,
     NgxMaskModule.forRoot({
       dropSpecialCharacters: false
     })
