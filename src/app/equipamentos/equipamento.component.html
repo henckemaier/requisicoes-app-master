@@ -68,22 +68,31 @@
   </div>
 <form [formGroup]="form" (ngSubmit)="modal.close('gravar')">
   <div class="modal-body">
+
     <div class="form-group mb-3">
       <label for="numeroSerie" class="form-label">Número de Série do Equipamento</label>
-      <input
-      formControlName="numeroSerie"
+      <input formControlName="numeroSerie"
+      [ngClass]="(numeroSerie?.touched && numeroSerie?.invalid) ? 'is-invalid' : ''"
       class="form-control"
       placeholder="0000-000"
-      mask="0000-000"
-      >
+      mask="0000-000">
+      <div class="invalid-feedback" *ngIf="numeroSerie?.touched && numeroSerie?.invalid">
+        <span *ngIf="numeroSerie?.errors?.['required']">O Número de Série é obrigatório.</span>
+        <span *ngIf="numeroSerie?.errors?.['minlength']">O Número de Série precisa ter no mínimo 7 caracteres.</span>
+      </div>
     </div>
 
     <div class="form-group mb-3">
       <label for="nome" class="form-label">Nome do Equipamento</label>
       <input formControlName="nome"
+      [ngClass]="(nome?.touched && nome?.invalid) ? 'is-invalid' : ''"
       class="form-control"
       type="text"
       placeholder="Digite o nome do equipamento">
+      <div class="invalid-feedback" *ngIf="nome?.touched && nome?.invalid">
+        <span *ngIf="nome?.errors?.['required']">O Nome do Equipamento é obrigatório.</span>
+        <span *ngIf="nome?.errors?.['minlength']">O Nome do Equipamento precisa ter no mínimo 3 caracteres.</span>
+      </div>
     </div>
 
 
@@ -92,25 +101,35 @@
       <div class="input-group">
         <span class="input-group-text" id="basic-addon1">R$</span>
         <input formControlName="preco"
+        [ngClass]="(preco?.touched && preco?.invalid) ? 'is-invalid' : ''"
         class="form-control"
         type="number"
         placeholder="0,00"
         aria-describedby="basic-addon2">
+        <div class="invalid-feedback" *ngIf="preco?.touched && preco?.invalid">
+          <span *ngIf="preco?.errors?.['required']">O Preço é obrigatório.</span>
+          <span *ngIf="preco?.errors?.['min']">O Preço não pode ser 0.</span>
+        </div>
       </div>
     </div>
 
     <div class="form-group mb-3">
       <label for="data" class="form-label">Data</label>
       <input formControlName="data"
+      [ngClass]="(data?.touched && data?.invalid) ? 'is-invalid' : ''"
       class="form-control"
       type="date"
       placeholder="Digite a data de fabricação do equipamento">
+      <div class="invalid-feedback" *ngIf="data?.touched && data?.invalid">
+        <span *ngIf="data?.errors?.['required']">A Data é obrigatória.</span>
+      </div>
     </div>
   </div>
+
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-primary col-md-3" (click)="modal.dismiss('fechar')">
         Cancelar</button>
-      <button type="submit" class="btn btn-primary col-md-3">Gravar</button>
+      <button type="submit" class="btn btn-primary col-md-3" [disabled]="this.form.invalid">Gravar</button>
     </div>
 </form>
 </ng-template>
