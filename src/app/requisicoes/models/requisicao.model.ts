@@ -9,5 +9,5 @@ export class Requisicao {
   descricao: string;
   equipamentoId: string;
   equipamento?: Equipamento;
-  dataAbertura: Date;
+  dataAbertura: any;
 }

@@ -26,6 +26,7 @@ export class RequisicaoComponent implements OnInit {
   public form: FormGroup;
 
   constructor(
+    private authService: AuthenticationService,
     private requisicaoService: RequisicaoService,
     private funcionarioService: FuncionarioService,
     private departamentoService: DepartamentoService,
@@ -86,6 +87,8 @@ export class RequisicaoComponent implements OnInit {
   public async gravar(modal: TemplateRef<any>, requisicao?: Requisicao) {
     this.form.reset();
 
+    this.form.get("requisicao.dataAbertura")?.setValue(new Date().toLocaleDateString());
+
     if (requisicao){
       const departamento = requisicao.departamento ? requisicao.departamento : null;
       const equipamento = requisicao.equipamento ? requisicao.equipamento : null;
@@ -129,4 +132,32 @@ export class RequisicaoComponent implements OnInit {
       this.toastrService.error("Houve um erro ao salvar a requisição. Tente novamente.", "Cadastro de Requisição")
     }
   }
+
+
+//  private obterFuncionarioLogado() {
+//    this.authService.authUser()
+//    .subscribe(dados => {
+//      this.funcionarioService.selecionarFuncionarioLogado(dados?.email)
+//        .subscribe(funcionario => {
+//          this.funcionarioLogado = funcionario;
+//          this.requisicoes$ = this.requisicoesService.selecionarTodos()
+//            .pipe(
+//              map(requisicoes => {
+//                return requisicoes
+//                  .filter(r => r.solicitante.email === this.funcionarioLogado?.email);
+//              })
+//            )
+//            setValoresPadrao() {
+//              this.form.patchValue({
+//                this.form.patchValue({
+//                  solicitante: this.funcionarioLogado,
+//                  status: 'Aberto',
+//                  dataAbertura: new Date(),
+//                  ultimaAtualizacao: new Date()
+//                })
+//              })
+//            }
+//        })
+//    })
+//  }
 }

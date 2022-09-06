@@ -33,7 +33,7 @@
           </thead>
           <tbody class="text-center">
             <tr *ngFor="let requisicao of (requisicoes$ | async)">
-              <td>{{ requisicao.dataAbertura | date: "dd/MM/yyyy"}}</td>
+              <td>{{ requisicao.dataAbertura.toDate() | date: "dd/MM/yyyy"}}</td>
               <td>{{ requisicao.departamento?.nome }}</td>
               <td>{{ requisicao.descricao }}</td>
               <td>{{ requisicao.equipamento?.nome }}</td>
@@ -68,6 +68,15 @@
   <div class="modal-body">
 
     <div formGroupName="requisicao">
+
+      <div class="form-group mb-3">
+        <label for="dataAbertura" class="form-label">Data de Abertura</label>
+        <input formControlName="dataAbertura"
+        [ngClass]="(dataAbertura?.touched && dataAbertura?.invalid) ? 'is-invalid' : ''"
+        class="form-control"
+        Disabled>
+      </div>
+
       <div class="form-group mb-3">
         <label for="departamentoId" class="form-label">Departamento</label>
         <ng-select formControlName="departamentoId"
