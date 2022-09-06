@@ -1,8 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from '../auth/services/authentication.service';
 import { Departamento } from '../departamentos/models/departamento.model';
 import { DepartamentoService } from '../departamentos/services/departamento.service';
 import { Funcionario } from './models/funcionario.model';
@@ -18,6 +20,8 @@ export class FuncionarioComponent implements OnInit {
   public form: FormGroup;
 
   constructor(
+    private router: Router,
+    private authService: AuthenticationService,
     private funcionarioService: FuncionarioService,
     private departamentoService: DepartamentoService,
     private toastrService: ToastrService,
@@ -27,12 +31,15 @@ export class FuncionarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      id: new FormControl(""),
-      nome: new FormControl("", [Validators.required, Validators.minLength(3)]),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      funcao: new FormControl("", [Validators.required]),
-      departamentoId: new FormControl("", [Validators.required]),
-      departamento: new FormControl("")
+      funcionario: new FormGroup({
+        id: new FormControl(""),
+        nome: new FormControl("", [Validators.required, Validators.minLength(3)]),
+        email: new FormControl("", [Validators.required, Validators.email]),
+        funcao: new FormControl("", [Validators.required]),
+        departamentoId: new FormControl("", [Validators.required]),
+        departamento: new FormControl("")
+      }),
+      senha: new FormControl("")
     });
     this.funcionarios$ = this.funcionarioService.selecionarTodos();
     this.departamentos$ = this.departamentoService.selecionarTodos();
@@ -43,23 +50,27 @@ export class FuncionarioComponent implements OnInit {
   }
 
   get id(): AbstractControl | null {
-    return this.form.get("id");
+    return this.form.get("funcionario.id");
   }
 
   get nome(): AbstractControl | null {
-    return this.form.get("nome");
+    return this.form.get("funcionario.nome");
   }
 
   get email(): AbstractControl | null {
-    return this.form.get("email");
+    return this.form.get("funcionario.email");
   }
 
   get funcao(): AbstractControl | null {
-    return this.form.get("funcao");
+    return this.form.get("funcionario.funcao");
   }
 
   get departamentoId(): AbstractControl | null {
-    return this.form.get("departamentoId");
+    return this.form.get("funcionario.departamentoId");
+  }
+
+  get senha(): AbstractControl | null {
+    return this.form.get("senha");
   }
 
   public async gravar(modal: TemplateRef<any>, funcionario?: Funcionario) {
@@ -74,17 +85,24 @@ export class FuncionarioComponent implements OnInit {
         departamento
       }
 
-      this.form.setValue(funcionarioCompleto);
+      this.form.get("funcionario")?.setValue(funcionarioCompleto);
     }
 
     try {
       await this.modalService.open(modal).result;
 
       if(this.form.dirty && this.form.valid) {
-        if (!funcionario)
-          await this.funcionarioService.inserir(this.form.value)
+        if (!funcionario) {
+          await this.authService.cadastrar(this.email?.value, this.senha?.value);
+
+          await this.funcionarioService.inserir(this.form.get("funcionario")?.value);
+
+          await this.authService.logout();
+
+          await this.router.navigate(["/login"]);
+        }
         else
-          await this.funcionarioService.editar(this.form.value);
+          await this.funcionarioService.editar(this.form.get("funcionario")?.value);
 
         this.toastrService.success("O funcionário foi salvo com sucesso.", "Cadastro de Funcionários");
       }
