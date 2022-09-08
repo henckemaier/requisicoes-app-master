@@ -3,7 +3,7 @@
     <!--conteudo principal-->
     <div class="card col-12 col-md-10 col-lg-9 mx-auto mt-5 shadow">
       <div class="text-center text-md-start">
-        <h1 class="fw-bold mt-4">Requisições</h1>
+        <h1 class="fw-bold mt-4">Minhas Requisições</h1>
       </div>
 
       <div class="d-grid d-md-block gap-2 mt-4">
@@ -24,7 +24,7 @@
         <table class="table table-light table-striped table-hover shadow">
           <thead class="thead-dark text-center">
             <tr>
-              <th>Abertura</th>
+              <th>Data de Abertura</th>
               <th>Departamento</th>
               <th>Descrição</th>
               <th>Equipamento</th>
@@ -68,14 +68,6 @@
   <div class="modal-body">
 
     <div formGroupName="requisicao">
-
-      <div class="form-group mb-3">
-        <label for="dataAbertura" class="form-label">Data de Abertura</label>
-        <input formControlName="dataAbertura"
-        [ngClass]="(dataAbertura?.touched && dataAbertura?.invalid) ? 'is-invalid' : ''"
-        class="form-control"
-        Disabled>
-      </div>
 
       <div class="form-group mb-3">
         <label for="departamentoId" class="form-label">Departamento</label>

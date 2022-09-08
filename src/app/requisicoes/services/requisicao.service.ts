@@ -11,7 +11,7 @@ import { Requisicao } from '../models/requisicao.model';
 })
 export class RequisicaoService {
 
-  registros: AngularFirestoreCollection<Requisicao>;
+  private registros: AngularFirestoreCollection<Requisicao>;
 
   constructor(private firestore: AngularFirestore) {
     this.registros = this.firestore.collection<Requisicao>("requisicoes");

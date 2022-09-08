@@ -87,7 +87,7 @@ export class RequisicaoComponent implements OnInit {
   public async gravar(modal: TemplateRef<any>, requisicao?: Requisicao) {
     this.form.reset();
 
-    this.form.get("requisicao.dataAbertura")?.setValue(new Date().toLocaleDateString());
+    this.form.get("requisicao.dataAbertura")?.setValue(new Date());
 
     if (requisicao){
       const departamento = requisicao.departamento ? requisicao.departamento : null;
