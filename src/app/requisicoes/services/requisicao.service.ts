@@ -40,20 +40,30 @@ export class RequisicaoService {
     return this.registros.valueChanges()
       .pipe(
         map((requisicoes: Requisicao[]) => {
-          requisicoes.forEach(requisicao => {
+          requisicoes.forEach(req => {
             this.firestore
               .collection<Departamento>("departamentos")
-              .doc(requisicao.departamentoId)
+              .doc(req.departamentoId)
               .valueChanges()
-              .subscribe(x => requisicao.departamento = x);
-            this.firestore
-              .collection<Equipamento>("equipamentos")
-              .doc(requisicao.equipamentoId)
-              .valueChanges()
-              .subscribe(x => requisicao.equipamento = x);
+              .subscribe(x => req.departamento = x);
+            if(req.equipamentoId){
+              this.firestore
+                .collection<Equipamento>("equipamentos")
+                .doc(req.equipamentoId)
+                .valueChanges()
+                .subscribe(x => req.equipamento = x);
+            }
           });
 
           return requisicoes;
+        })
+      )
+  }
+  public selecionarRequisicoesFuncionarioAtual(id: string) {
+    return this.selecionarTodos()
+      .pipe(
+        map(requisicoes => {
+          return requisicoes.filter(req => req.funcionarioId === id)
         })
       )
   }

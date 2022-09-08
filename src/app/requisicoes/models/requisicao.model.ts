@@ -7,7 +7,9 @@ export class Requisicao {
   departamentoId: string;
   departamento?: Departamento;
   descricao: string;
-  equipamentoId: string;
+  equipamentoId?: string;
   equipamento?: Equipamento;
+  funcionarioId: string;
+  funcionario?: Funcionario;
   dataAbertura: any;
 }
