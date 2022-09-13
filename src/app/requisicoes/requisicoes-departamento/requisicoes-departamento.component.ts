@@ -50,17 +50,14 @@ export class RequisicoesDepartamentoComponent implements OnInit {
 
     this.departamentos$ = this.departamentoService.selecionarTodos();
     this.equipamentos$ = this.equipamentoService.selecionarTodos();
+    this.requisicoes$ = this.requisicaoService.selecionarTodos();
 
     this.processoAutenticado$ = this.authService.usuarioLogado.subscribe(usuario => {
       const email: string = usuario?.email!;
 
       this.funcionarioService.selecionarFuncionarioLogado(email)
-        .subscribe(funcionario => {
-          this.funcionarioLogado = funcionario;
-          this.requisicoes$ = this.requisicaoService
-            .selecionarRequisicoesPorDepartamentoId(funcionario.departamentoId);
+        .subscribe(funcionario => this.funcionarioLogado = funcionario);
         });
-    });
   }
 
   ngOnDestroy(): void {
@@ -77,7 +74,7 @@ export class RequisicoesDepartamentoComponent implements OnInit {
 
   public async gravar(modal: TemplateRef<any>, requisicao: Requisicao) {
     this.requisicaoSelecionada = requisicao;
-    this.requisicaoSelecionada.movimentacoes = requisicao.movimentacoes ? requisicao.movimentacoes : []; 
+    this.requisicaoSelecionada.movimentacoes = requisicao.movimentacoes ? requisicao.movimentacoes : [];
 
     this.form.reset();
     this.configurarValoresPadrao();
