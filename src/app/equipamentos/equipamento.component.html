@@ -114,14 +114,15 @@
     </div>
 
     <div class="form-group mb-3">
-      <label for="data" class="form-label">Data</label>
+      <label for="data" class="form-label">Data Fabricação</label>
       <input formControlName="data"
       [ngClass]="(data?.touched && data?.invalid) ? 'is-invalid' : ''"
       class="form-control"
       type="date"
       placeholder="Digite a data de fabricação do equipamento">
       <div class="invalid-feedback" *ngIf="data?.touched && data?.invalid">
-        <span *ngIf="data?.errors?.['required']">A Data é obrigatória.</span>
+        <span *ngIf="data?.errors?.['required']">A Data de fabricação é obrigatória.</span>
+        <span *ngIf="data?.errors?.['datafutura']">A Data de fabricação não pode exceder hoje.</span>
       </div>
     </div>
   </div>

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Equipamento } from './models/equipamento.model';
 import { EquipamentoService } from './services/equipamento.service';
 import { ToastrService } from 'ngx-toastr';
+import { dataFuturaValidator } from '../shared/validators/data-futura.validators';
 
 @Component({
   selector: 'app-equipamento',
@@ -29,7 +30,7 @@ export class EquipamentoComponent implements OnInit {
       numeroSerie: new FormControl("", [Validators.required, Validators.minLength(8)]),
       nome: new FormControl("", [Validators.required, Validators.minLength(3)]),
       preco: new FormControl("", [Validators.required, Validators.min(1)]),
-      data: new FormControl("", [Validators.required])
+      data: new FormControl("", [Validators.required, dataFuturaValidator()])
     })
   }
 
