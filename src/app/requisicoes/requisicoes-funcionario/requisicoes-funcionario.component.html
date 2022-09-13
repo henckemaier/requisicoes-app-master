@@ -39,6 +39,12 @@
               <td>{{ requisicao.equipamento ? requisicao.equipamento.nome : "Não Selecionado"}}</td>
               <td class="d-grid d-md-block">
                 <button
+                  [routerLink]="['/requisicoes', requisicao.id]"
+                  type="button"
+                  class="btn btn-outline-primary">
+                  <i class="pi pi-tags"></i>
+                </button>
+                <button
                   (click)="gravar(modal, requisicao)"
                   type="button"
                   class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto">

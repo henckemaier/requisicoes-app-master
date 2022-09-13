@@ -46,12 +46,16 @@ export class RequisicoesFuncionarioComponent implements OnInit, OnDestroy {
         departamentoId: new FormControl("", [Validators.required]),
         departamento: new FormControl(""),
 
-        descricao: new FormControl("", [Validators.required, Validators.minLength(3)]),
-
-        equipamentoId: new FormControl(""),
+        equipamentoId: new FormControl("", [Validators.required]),
         equipamento: new FormControl(""),
 
-        dataAbertura: new FormControl("")
+        descricao: new FormControl("", [Validators.required, Validators.minLength(3)]),
+
+        dataAbertura: new FormControl(""),
+
+        status: new FormControl(""),
+        ultimaAtualizacao: new FormControl(""),
+        movimentacoes: new FormControl(""),
     });
 
     this.departamentos$ = this.departamentoService.selecionarTodos();
@@ -150,7 +154,9 @@ export class RequisicoesFuncionarioComponent implements OnInit, OnDestroy {
     }
   }
   private configurarValoresPadrao(): void {
+    this.form.get("status")?.setValue("Aberta");
     this.form.get("dataAbertura")?.setValue(new Date());
+    this.form.get("ultimaAtualizacao")?.setValue(new Date());
     this.form.get("equipamentoId")?.setValue(null);
     this.form.get("funcionarioId")?.setValue(this.funcionarioLogadoId);
   }
